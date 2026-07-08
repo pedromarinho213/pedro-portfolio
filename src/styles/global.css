@@ -1,37 +1,46 @@
 /* ============================================================
    DESIGN SYSTEM — pedromoura.me
-   Dark · Artistic · Motion-forward
+   Light · Cream · Motion-forward
    ============================================================ */
 
 /* ---- 1. DESIGN TOKENS ---------------------------------------- */
 
 :root {
   /* --- Palette --- */
-  --color-bg:             #09090b;
-  --color-bg-subtle:      #0f0f13;
-  --color-surface:        #16161c;
-  --color-surface-raised: #1e1e28;
-  --color-border:         #26263a;
-  --color-border-subtle:  #1c1c28;
+  --color-bg:             #fff9ed;
+  --color-text:           #353535;
+  --color-text-muted:     #8c8479;
 
-  --color-text:           #eceae6;
-  --color-text-muted:     #78768a;
-  --color-text-subtle:    #46445a;
+  /* Nav pill */
+  --color-nav-bg:         #353535;
+  --color-nav-text:       #ffffff;
+  --color-nav-text-muted: #b4b4b4;
 
-  /* Primary accent — electric lime */
-  --color-accent:         #c8ff47;
-  --color-accent-rgb:     200, 255, 71;
-  --color-accent-dim:     #9acc20;
+  /* Project cards */
+  --color-card-aura:       #b4c9ff;
+  --color-card-creatwave:  #6559a7;
+  --color-card-mimo:       #ffcceb;
 
-  /* Secondary accent — electric violet */
-  --color-accent-2:       #7c5cff;
-  --color-accent-2-rgb:   124, 92, 255;
-  --color-accent-2-dim:   #5e40e6;
+  /* Gradient trail — single trail, 4-stop linear gradient (Hero) */
+  --color-trail-1: rgba(167, 86, 214, 1);
+  --color-trail-2: rgba(227, 143, 225, 1);
+  --color-trail-3: rgba(63, 202, 228, 0.76);
+  --color-trail-4: rgba(133, 173, 41, 0);
+
+  /* Hover overlay (work cards) */
+  --color-overlay: rgba(0, 0, 0, 0.72);
+
+  /* Neutral surfaces/borders — derived from text color at low opacity */
+  --color-surface:        rgba(53, 53, 53, 0.04);
+  --color-surface-raised: rgba(53, 53, 53, 0.08);
+  --color-border:         rgba(53, 53, 53, 0.15);
+  --color-border-subtle:  rgba(53, 53, 53, 0.08);
 
   /* --- Typography --- */
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-               sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-heading: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                  sans-serif;
+  --font-sans:    'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                  sans-serif;
 
   /* Fluid type scale — clamp(min, preferred, max) */
   --text-xs:   clamp(0.688rem,  0.650rem + 0.19vw,  0.800rem);
@@ -172,6 +181,7 @@ body {
 /* ---- 4. FLUID TYPOGRAPHY ------------------------------------- */
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
   font-weight: 700;
@@ -203,7 +213,7 @@ a {
 }
 
 a:hover {
-  color: var(--color-accent);
+  opacity: 0.7;
 }
 
 strong, b {
@@ -232,7 +242,7 @@ small {
 /* ---- 5. CODE ------------------------------------------------- */
 
 code, kbd, samp, pre {
-  font-family: var(--font-mono);
+  font-family: ui-monospace, SFMono-Regular, monospace;
   font-size: 0.88em;
 }
 
@@ -250,7 +260,6 @@ code {
   border: 1px solid var(--color-border-subtle);
   padding: 0.12em 0.4em;
   border-radius: var(--radius-xs);
-  color: var(--color-accent);
 }
 
 pre code {
@@ -258,15 +267,6 @@ pre code {
   border: none;
   padding: 0;
   color: inherit;
-}
-
-kbd {
-  background: var(--color-surface-raised);
-  border: 1px solid var(--color-border);
-  border-bottom-width: 2px;
-  padding: 0.1em 0.45em;
-  border-radius: var(--radius-sm);
-  font-size: 0.82em;
 }
 
 
@@ -320,7 +320,7 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: var(--color-accent);
+  border-color: var(--color-text);
 }
 
 
@@ -339,7 +339,7 @@ hr {
 }
 
 blockquote {
-  border-left: 2px solid var(--color-accent);
+  border-left: 2px solid var(--color-text);
   padding-left: var(--space-6);
   color: var(--color-text-muted);
   font-style: italic;
@@ -368,13 +368,13 @@ th {
 /* ---- 10. FOCUS & SELECTION ----------------------------------- */
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-text);
   outline-offset: 3px;
   border-radius: var(--radius-xs);
 }
 
 ::selection {
-  background-color: rgba(var(--color-accent-rgb), 0.22);
+  background-color: rgba(53, 53, 53, 0.18);
   color: var(--color-text);
 }
 
@@ -393,5 +393,5 @@ th {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-subtle);
+  background: var(--color-border);
 }
