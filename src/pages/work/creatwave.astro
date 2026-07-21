@@ -1,0 +1,620 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+interface MetaItem {
+  label: string;
+  value: string;
+}
+
+interface PaletteColor {
+  name: string;
+  hex: string;
+}
+
+interface MediaAsset {
+  src: string | null;
+  alt: string;
+}
+
+interface CaseStudyData {
+  slug: string;
+  title: string;
+  subtitle: string;
+  heroMedia: MediaAsset;
+  meta: MetaItem[];
+  market: { heading: string; body: string; media: MediaAsset };
+  direction: { heading: string; body: string; media: MediaAsset };
+  palette: { heading: string; body: string; colors: PaletteColor[]; media: MediaAsset };
+  motion: { body: string; media: MediaAsset };
+  nextCase: { label: string; projectName: string; href: string };
+}
+
+// Content, metadata, palette and media for this case study — swap this
+// object (only this object) to reuse the page as the template for the
+// Aura Finance and Mimo Doce case studies once their copy exists.
+const project: CaseStudyData = {
+  slug: 'creatwave',
+  title: 'Creatwave: The Creative Ecosystem',
+  subtitle:
+    'A social platform built for creatives — designed to feel as fluid and dynamic as the work it showcases.',
+  heroMedia: { src: null, alt: 'Creatwave hero video placeholder' },
+  meta: [
+    { label: 'Role', value: 'Brand, UI/UX and Motion Designer' },
+    { label: 'Tools', value: 'Figma · After Effects · Illustrator' },
+    { label: 'Timeline', value: 'Aug — Nov 2024 · 4 months' },
+    { label: 'Context', value: 'Making the Visual Identity for an webapp.' },
+  ],
+  market: {
+    heading: 'Reading the Market',
+    body: 'A competitive analysis of Behance, Dribbble, Instagram, and X revealed a polarized landscape: platforms either felt overly corporate or visually oversaturated. The opportunity was clear — a space that felt sophisticated, fluid, and built for collaboration had yet to exist.',
+    media: { src: null, alt: 'Market research placeholder' },
+  },
+  direction: {
+    heading: 'Choosing the Right Direction',
+    body: "The symbol abstractly reinterprets the initials 'C' and 'W'. The circular form references global connection; the negative space suggests an explosion — creativity propagating outward. Engineered for legibility at every scale, from app icon to billboard.",
+    media: { src: null, alt: 'Creatwave symbol construction placeholder' },
+  },
+  palette: {
+    heading: 'A Palette Built on Intention',
+    body: 'Lavender Purple was chosen not for aesthetics alone, but for strategic differentiation. Where competitors defaulted to corporate blues and saturated gradients, Creatwave claims a tone that signals creativity, sophistication, and harmonic energy.',
+    colors: [
+      { name: 'Lavender', hex: '#B68FD8' },
+      { name: 'Deep Purple', hex: '#65448C' },
+      { name: 'Carbon', hex: '#070707' },
+      { name: 'White', hex: '#FFFFFF' },
+    ],
+    media: { src: null, alt: 'Creatwave color palette application placeholder' },
+  },
+  motion: {
+    body: 'Fluid UI micro-interactions elevate the platform\'s sophisticated minimalism, while the dynamic branding video transforms the core "creative explosion" concept into a living, high-impact digital ecosystem.',
+    media: { src: null, alt: 'Creatwave motion and behavior placeholder' },
+  },
+  nextCase: {
+    label: 'Next Case →',
+    projectName: 'Mimo Doce - Delivery App',
+    href: '/work/mimo-doce',
+  },
+};
+---
+
+<BaseLayout title={`${project.title} — Pedro Moura`}>
+  <main class="case">
+    <section class="case-hero">
+      <div class="case-trail trail-fade" aria-hidden="true">
+        <svg
+          class="case-trail-svg"
+          viewBox="-60 -160 1770 1380"
+          preserveAspectRatio="xMidYMid slice"
+          focusable="false"
+        >
+          <defs>
+            <linearGradient id="caseTrailGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color: var(--color-trail-1)" />
+              <stop offset="32%" style="stop-color: var(--color-trail-2)" />
+              <stop offset="68%" style="stop-color: var(--color-trail-3)" />
+              <stop offset="97%" style="stop-color: var(--color-trail-4)" />
+            </linearGradient>
+
+            <filter id="caseTrailGrain" x="-20%" y="-20%" width="140%" height="140%">
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.9"
+                numOctaves="5"
+                seed="7"
+                stitchTiles="stitch"
+                result="noise"
+              />
+              <feColorMatrix
+                in="noise"
+                type="matrix"
+                values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0"
+                result="grainAlpha"
+              />
+              <feComposite in="grainAlpha" in2="SourceGraphic" operator="in" result="grainOnShape" />
+              <feBlend in="SourceGraphic" in2="grainOnShape" mode="overlay" />
+            </filter>
+          </defs>
+
+          <path
+            d="M1609.44 395.849C1609.44 355.849 1598.94 267.849 1563.44 232.349C1527.94 196.849 1430.94 171.349 1284.44 171.349C1137.94 171.349 1116.44 258.04 1150.94 308.04C1206.13 388.034 1417.94 411.04 1417.94 490.04C1417.94 548.54 1084.94 557.37 982.935 530.039C880.935 502.709 767.435 374.54 733.936 286.349C706.496 214.111 426.935 -102.46 310.435 133.54C212.61 331.709 7.24641 223.313 54.4353 442.04C91.4352 613.54 469.435 412.04 535.935 426.04C737.399 468.453 740.935 742.54 625.935 757.54C544.249 768.195 273.142 659.597 259.435 772.54C234.435 978.54 492.935 919.04 595.935 919.04C677.935 919.04 737.956 1090.78 820.936 1009.85C901.936 930.85 813.935 827.833 1079.94 731.73C1312.44 647.73 1059.82 927.214 1066.94 969.04C1079.44 1042.54 1350.23 894.115 1381.44 881.54C1551.44 813.04 1546.79 941.35 1535.44 1009.85C1519.44 1106.35 1357.44 1113.92 1381.44 1120.35"
+            fill="none"
+            stroke="url(#caseTrailGradient)"
+            stroke-width="108"
+            stroke-linecap="round"
+            filter="url(#caseTrailGrain)"
+          />
+        </svg>
+      </div>
+
+      <div class="case-container case-hero-stack">
+        <div class="case-media case-media--hero">
+          {
+            project.heroMedia.src ? (
+              <img src={project.heroMedia.src} alt={project.heroMedia.alt} />
+            ) : (
+              <div class="media-placeholder" role="img" aria-label={project.heroMedia.alt} />
+            )
+          }
+        </div>
+
+        <div class="case-hero-head">
+          <h1 class="case-title">{project.title}</h1>
+          <p class="case-subtitle">{project.subtitle}</p>
+        </div>
+
+        <ul class="case-meta">
+          {
+            project.meta.map((item) => (
+              <li class="case-meta-item">
+                <span class="case-meta-label">{item.label}</span>
+                <span class="case-meta-value">{item.value}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="case-section" id="market">
+      <div class="case-container case-row">
+        <div class="case-media case-media--market">
+          {
+            project.market.media.src ? (
+              <img src={project.market.media.src} alt={project.market.media.alt} />
+            ) : (
+              <div class="media-placeholder" role="img" aria-label={project.market.media.alt} />
+            )
+          }
+        </div>
+        <div class="case-copy">
+          <h2 class="case-heading">{project.market.heading}</h2>
+          <p class="case-body">{project.market.body}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="direction">
+      <div class="case-container case-centered">
+        <h2 class="case-heading case-heading--centered">{project.direction.heading}</h2>
+        <div class="case-media case-media--direction">
+          {
+            project.direction.media.src ? (
+              <img src={project.direction.media.src} alt={project.direction.media.alt} />
+            ) : (
+              <div class="media-placeholder" role="img" aria-label={project.direction.media.alt} />
+            )
+          }
+        </div>
+        <p class="case-body case-body--centered">{project.direction.body}</p>
+      </div>
+    </section>
+
+    <section class="case-section" id="palette">
+      <div class="case-container case-row">
+        <div class="case-copy">
+          <h2 class="case-heading">{project.palette.heading}</h2>
+          <p class="case-body">{project.palette.body}</p>
+          <ul class="palette-list">
+            {
+              project.palette.colors.map((color) => (
+                <li class="palette-item">
+                  <span class="palette-swatch" style={`background: ${color.hex}`} />
+                  <span class="palette-name">{color.name}</span>
+                  <span class="palette-hex">{color.hex}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="case-media case-media--palette">
+          {
+            project.palette.media.src ? (
+              <img src={project.palette.media.src} alt={project.palette.media.alt} />
+            ) : (
+              <div class="media-placeholder" role="img" aria-label={project.palette.media.alt} />
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="motion">
+      <div class="case-container case-centered">
+        <div class="case-media case-media--motion">
+          {
+            project.motion.media.src ? (
+              <img src={project.motion.media.src} alt={project.motion.media.alt} />
+            ) : (
+              <div class="media-placeholder" role="img" aria-label={project.motion.media.alt} />
+            )
+          }
+        </div>
+        <p class="case-body">{project.motion.body}</p>
+      </div>
+    </section>
+
+    <section class="next-case">
+      <div class="case-container next-case-row">
+        <div class="next-case-info">
+          <p class="next-case-label">{project.nextCase.label}</p>
+          <p class="next-case-name">{project.nextCase.projectName}</p>
+        </div>
+        <a href={project.nextCase.href} class="next-case-cta">
+          View next case
+          <svg
+            class="next-case-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M3.33331 8H12.6666"
+              stroke="currentColor"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M8 3.3335L12.6667 8.00016L8 12.6668"
+              stroke="currentColor"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .case {
+    background: var(--color-bg);
+  }
+
+  .case-container {
+    max-width: 76.5rem;
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  .case-section {
+    padding-block: var(--space-24);
+  }
+
+  /* ---- Hero ---- */
+
+  .case-hero {
+    position: relative;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
+
+  /* Figma-confirmed: the same trail treatment as the home Hero (same
+     --color-trail-* gradient + feTurbulence grain), not home-exclusive.
+     Height is hard-clipped to the exact band Figma uses for it: page
+     top through the bottom of "Hero video-placeholder" — 705px desktop
+     / 509px mobile (MCP-confirmed: node 38:75 y=205+height=500, node
+     45:43 y=205+height=304) — well before "Head title and subtitle"
+     starts (y=769 desktop / y=549 mobile), so the trail can never reach
+     the title/subtitle/meta no matter how the gradient's own
+     color/opacity falls inside that box. overflow: hidden is the actual
+     safety cutoff — don't rely on the <svg> element's own default
+     clipping alone. The `trail-fade` class (global.css) layers a
+     mask-image on top so that hard cutoff isn't visible as a straight
+     line — it fades the trail to transparent before the edge instead.
+     --trail-fade-start is tuned slightly differently per breakpoint
+     below since the container's proportions differ. */
+  .case-trail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 44rem;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    --trail-fade-start: 55%;
+  }
+
+  .case-trail-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .case-hero-stack {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .case-hero-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .case-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-3xl);
+    color: var(--color-text);
+    max-width: 40ch;
+    margin: 0;
+  }
+
+  .case-subtitle {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: var(--text-base);
+    color: var(--color-text);
+    max-width: 32ch;
+    margin: 0;
+  }
+
+  .case-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+
+  .case-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1;
+  }
+
+  .case-meta-label {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .case-meta-value {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+  }
+
+  /* ---- Shared section layout ---- */
+
+  .case-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-12);
+  }
+
+  .case-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-10);
+  }
+
+  .case-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .case-heading {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .case-heading--centered {
+    text-align: center;
+  }
+
+  .case-body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: var(--text-base);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .case-body--centered {
+    text-align: center;
+    max-width: 60ch;
+  }
+
+  /* ---- Media placeholders ---- */
+
+  .case-media {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .case-media img,
+  .media-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .case-media img {
+    object-fit: cover;
+  }
+
+  .media-placeholder {
+    background: var(--color-media-placeholder);
+  }
+
+  .case-media--hero {
+    aspect-ratio: 16 / 9;
+  }
+
+  .case-media--market {
+    aspect-ratio: 496 / 585;
+  }
+
+  .case-media--direction {
+    width: 100%;
+    aspect-ratio: 1016 / 400;
+  }
+
+  .case-media--palette {
+    aspect-ratio: 542 / 731;
+  }
+
+  .case-media--motion {
+    width: 100%;
+    aspect-ratio: 1224 / 376;
+  }
+
+  /* ---- Palette list ---- */
+
+  .palette-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .palette-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .palette-swatch {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+  }
+
+  .palette-name {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+  }
+
+  .palette-hex {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  /* ---- Next case ---- */
+
+  .next-case {
+    padding-block: var(--space-16) var(--space-24);
+  }
+
+  .next-case-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding-top: var(--space-12);
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .next-case-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .next-case-label {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .next-case-name {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: var(--text-xl);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .next-case-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    color: var(--color-nav-text);
+    background: var(--color-nav-bg);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-5);
+    white-space: nowrap;
+  }
+
+  .next-case-icon {
+    color: var(--color-nav-text);
+  }
+
+  /* ---- Mobile (<1024px) ---- */
+
+  @media (max-width: 1023px) {
+    .case-trail {
+      height: 32rem;
+      --trail-fade-start: 45%;
+    }
+
+    .case-hero-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+
+    .case-meta {
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .case-row {
+      grid-template-columns: 1fr;
+    }
+
+    .case-media--market {
+      aspect-ratio: 358 / 412;
+    }
+
+    .case-media--direction {
+      aspect-ratio: 356 / 400;
+    }
+
+    .case-media--palette {
+      aspect-ratio: 356 / 476;
+    }
+
+    .case-media--motion {
+      aspect-ratio: 358 / 447;
+    }
+
+    .next-case-row {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>
