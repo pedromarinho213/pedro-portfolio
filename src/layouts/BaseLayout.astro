@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Nav from '../components/Nav.astro';
 
 interface Props {
   title?: string;
@@ -21,11 +22,12 @@ const { title = 'Pedro Moura — UI/UX & Motion Designer' } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@700;800&family=Poppins:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Rozha+One&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
+    <Nav />
     <slot />
   </body>
 </html>

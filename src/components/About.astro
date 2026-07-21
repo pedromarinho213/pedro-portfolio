@@ -1,0 +1,129 @@
+---
+---
+
+<section id="about" class="about">
+  <div class="about-container">
+    <p class="about-title">
+      About <span class="about-title-accent">me</span>
+    </p>
+
+    <div class="about-content">
+      <div class="about-avatar">
+        <img
+          src="/assets/images/my-notion-face-portrait.png"
+          alt="Illustrated portrait of Pedro Moura"
+          width="480"
+          height="480"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="about-text">
+        <p class="about-subheadline">A blend of motion, logic, and visual art.</p>
+        <p class="about-body">
+          Design student at UFAM turning complex problems into clean, moving interfaces. Bridging
+          aesthetics and usability, one frame at a time.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: var(--color-bg);
+    padding-block: var(--space-24);
+  }
+
+  .about-container {
+    max-width: 87.5rem;
+    margin-inline: auto;
+    padding-inline: var(--space-8);
+  }
+
+  /* Figma-confirmed heading style for this section only — not the small
+     [data-label] overline used in Work/Skills. "me" uses Rozha One as a
+     deliberate decorative accent (Figma-confirmed on the live file, at
+     both desktop and mobile sizes) — see BRIEF.md for the note on why
+     this reintroduces a font previously marked as removed. */
+  .about-title {
+    text-align: center;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+    margin-bottom: var(--space-12);
+  }
+
+  .about-title-accent {
+    font-family: 'Rozha One', serif;
+    font-weight: 400;
+  }
+
+  .about-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-32);
+  }
+
+  .about-avatar {
+    flex-shrink: 0;
+    width: 18.5rem;
+    aspect-ratio: 1;
+    /* Figma-measured "squircle" corner radius: ~33% of the avatar's own
+       size at every breakpoint (99px/295px desktop, 38px/114px mobile).
+       Doesn't match any --radius-* token, so it's expressed as a
+       percentage rather than force-fit to --radius-full or --radius-2xl. */
+    border-radius: 33%;
+    overflow: hidden;
+  }
+
+  .about-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 34rem;
+  }
+
+  .about-subheadline {
+    font-family: var(--font-sans);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .about-body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-base);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  @media (max-width: 1023px) {
+    .about-title {
+      margin-bottom: var(--space-8);
+    }
+
+    .about-content {
+      gap: var(--space-8);
+    }
+
+    .about-avatar {
+      width: 7.125rem;
+    }
+
+    .about-text {
+      max-width: none;
+    }
+  }
+</style>

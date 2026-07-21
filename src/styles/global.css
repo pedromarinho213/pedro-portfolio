@@ -30,6 +30,9 @@
   /* Hover overlay (work cards) */
   --color-overlay: rgba(0, 0, 0, 0.72);
 
+  /* Case study media placeholders (image/video not final yet) */
+  --color-media-placeholder: #d9d9d9;
+
   /* Neutral surfaces/borders — derived from text color at low opacity */
   --color-surface:        rgba(53, 53, 53, 0.04);
   --color-surface-raised: rgba(53, 53, 53, 0.08);
@@ -236,6 +239,24 @@ small {
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
   color: var(--color-text-muted);
+}
+
+/* Shared decorative-trail fade utility — used on case study page hero
+   trails (see creatwave.astro) so a trail confined to a fixed-height
+   container (overflow: hidden, to guarantee it never reaches page
+   text) fades to transparent before its own bottom edge, instead of
+   being hard-clipped there. overflow: hidden stays as the actual
+   safety cutoff; this mask is a purely visual smoothing layer on top
+   of it, not a replacement.
+   Usage: add this class alongside the fixed-height/overflow:hidden
+   container, e.g. <div class="case-trail trail-fade">. Override
+   --trail-fade-start (the point where the fade begins, as a %) per
+   usage or per breakpoint if the container's proportions call for it —
+   see .case-trail in creatwave.astro for a live example. */
+.trail-fade {
+  --trail-fade-start: 60%;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black var(--trail-fade-start), transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black var(--trail-fade-start), transparent 100%);
 }
 
 

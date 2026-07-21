@@ -1,0 +1,191 @@
+---
+interface SkillItem {
+  key: string;
+  name: string;
+  icon: string;
+}
+
+const skills: SkillItem[] = [
+  { key: 'after-effects', name: 'After Effects', icon: '/assets/icons/after-effects.svg' },
+  { key: 'premiere-pro', name: 'Premiere Pro', icon: '/assets/icons/premiere-pro.svg' },
+  { key: 'figma', name: 'Figma', icon: '/assets/icons/figma.svg' },
+  { key: 'affinity', name: 'Affinity', icon: '/assets/icons/affinity.svg' },
+  { key: 'claude', name: 'Claude', icon: '/assets/icons/claude.svg' },
+];
+---
+
+<section id="skills" class="skills">
+  <div class="skills-container">
+    <p data-label class="skills-label">Tools and skills</p>
+
+    <!-- Desktop marquee -->
+    <div class="skills-marquee">
+      <div class="skills-track">
+        <ul class="skills-list">
+          {
+            skills.map((skill) => (
+              <li class="skill-item">
+                <img class="skill-icon" src={skill.icon} alt={skill.name} width="80" height="80" loading="lazy" />
+                <span class="skill-name">{skill.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <ul class="skills-list" aria-hidden="true">
+          {
+            skills.map((skill) => (
+              <li class="skill-item">
+                <img class="skill-icon" src={skill.icon} alt="" width="80" height="80" loading="lazy" />
+                <span class="skill-name">{skill.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Mobile static scroll row -->
+    <ul class="skills-scroll">
+      {
+        skills.map((skill) => (
+          <li class="skill-item skill-item--static">
+            <img class="skill-icon" src={skill.icon} alt={skill.name} width="80" height="80" loading="lazy" />
+            <span class="skill-name">{skill.name}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .skills {
+    background: var(--color-bg);
+    padding-block: var(--space-24);
+  }
+
+  .skills-container {
+    max-width: 87.5rem;
+    margin-inline: auto;
+    padding-inline: var(--space-8);
+  }
+
+  .skills-label {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+
+  /* ---- Desktop marquee ---- */
+
+  .skills-marquee {
+    max-width: 45rem;
+    margin-inline: auto;
+    padding-block: var(--space-4);
+    overflow: hidden;
+  }
+
+  .skills-track {
+    display: flex;
+    width: max-content;
+    animation: skills-scroll 17.3s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes skills-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .skills-list {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  /* Spacing lives on each item's own trailing margin (not a `gap` on
+     .skills-list) so the two halves are identical repeating units —
+     the seam between the end of one half and the start of the next
+     gets the same spacing as every other icon pair, keeping the
+     translateX(-50%) loop math exact. */
+  .skills-list .skill-item {
+    margin-right: var(--space-24);
+  }
+
+  @media (hover: hover) {
+    .skills-marquee:hover .skills-track {
+      animation-play-state: paused;
+    }
+  }
+
+  .skill-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .skill-icon {
+    width: 5rem;
+    height: auto;
+    transition: transform var(--duration-base) var(--ease-hover);
+  }
+
+  .skill-name {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity var(--duration-base) var(--ease-hover),
+      transform var(--duration-base) var(--ease-hover);
+  }
+
+  @media (hover: hover) {
+    .skills-list .skill-item:hover .skill-icon {
+      transform: scale(1.15);
+    }
+
+    .skills-list .skill-item:hover .skill-name {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ---- Mobile static scroll row ---- */
+
+  .skills-scroll {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
+    .skills-marquee {
+      display: none;
+    }
+
+    .skills-track {
+      animation: none;
+    }
+
+    .skills-scroll {
+      display: flex;
+      gap: var(--space-10);
+      overflow-x: auto;
+      padding-block: var(--space-4);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .skill-item--static {
+      flex-shrink: 0;
+    }
+
+    .skill-item--static .skill-name {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,190 @@
+---
+---
+
+<section id="home" class="hero">
+  <svg
+    class="hero-trail"
+    viewBox="-60 -160 1770 1380"
+    preserveAspectRatio="xMidYMid slice"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <defs>
+      <linearGradient id="trailGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color: var(--color-trail-1)" />
+        <stop offset="32%" style="stop-color: var(--color-trail-2)" />
+        <stop offset="68%" style="stop-color: var(--color-trail-3)" />
+        <stop offset="97%" style="stop-color: var(--color-trail-4)" />
+      </linearGradient>
+
+      <filter id="trailGrain" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.9"
+          numOctaves="5"
+          seed="7"
+          stitchTiles="stitch"
+          result="noise"
+        />
+        <feColorMatrix
+          in="noise"
+          type="matrix"
+          values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0"
+          result="grainAlpha"
+        />
+        <feComposite in="grainAlpha" in2="SourceGraphic" operator="in" result="grainOnShape" />
+        <feBlend in="SourceGraphic" in2="grainOnShape" mode="overlay" />
+      </filter>
+    </defs>
+
+    <path
+      d="M1609.44 395.849C1609.44 355.849 1598.94 267.849 1563.44 232.349C1527.94 196.849 1430.94 171.349 1284.44 171.349C1137.94 171.349 1116.44 258.04 1150.94 308.04C1206.13 388.034 1417.94 411.04 1417.94 490.04C1417.94 548.54 1084.94 557.37 982.935 530.039C880.935 502.709 767.435 374.54 733.936 286.349C706.496 214.111 426.935 -102.46 310.435 133.54C212.61 331.709 7.24641 223.313 54.4353 442.04C91.4352 613.54 469.435 412.04 535.935 426.04C737.399 468.453 740.935 742.54 625.935 757.54C544.249 768.195 273.142 659.597 259.435 772.54C234.435 978.54 492.935 919.04 595.935 919.04C677.935 919.04 737.956 1090.78 820.936 1009.85C901.936 930.85 813.935 827.833 1079.94 731.73C1312.44 647.73 1059.82 927.214 1066.94 969.04C1079.44 1042.54 1350.23 894.115 1381.44 881.54C1551.44 813.04 1546.79 941.35 1535.44 1009.85C1519.44 1106.35 1357.44 1113.92 1381.44 1120.35"
+      fill="none"
+      stroke="url(#trailGradient)"
+      stroke-width="108"
+      stroke-linecap="round"
+      filter="url(#trailGrain)"
+    />
+  </svg>
+
+  <div class="hero-glass">
+    <h1 class="hero-headline">Design that moves.</h1>
+    <p class="hero-subtitle">Pedro Moura — UI/UX &amp; Motion Designer</p>
+    <p class="hero-body">
+      I help forward-thinking startups and tech companies build fluid digital experiences,
+      blending high-fidelity UI with purposeful motion design to engage users and elevate brands.
+    </p>
+  </div>
+
+  <div class="scroll-indicator">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M12 19V5" fill="none" />
+      <path d="M5 12l7-7 7 7" fill="none" />
+    </svg>
+    <span>Scroll to explore</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--color-bg);
+  }
+
+  .hero-trail {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity var(--duration-slower) var(--ease-reveal),
+      transform var(--duration-slower) var(--ease-reveal);
+  }
+
+  .hero-trail.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-glass {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    max-width: 60rem;
+    margin-inline: var(--space-6);
+    padding: var(--space-12) var(--space-16);
+    text-align: center;
+  }
+
+  .hero-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 249, 237, 0.12);
+    -webkit-mask-image: radial-gradient(ellipse closest-side at 50% 50%, black 20%, transparent 90%);
+    mask-image: radial-gradient(ellipse closest-side at 50% 50%, black 20%, transparent 90%);
+  }
+
+  .hero-headline {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: var(--text-4xl);
+    margin: 0;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .hero-body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    max-width: 46rem;
+    margin: 0;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: var(--space-12);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+  }
+</style>
+
+<script>
+  const trail = document.querySelector<SVGElement>('.hero-trail');
+
+  if (trail) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(trail);
+  }
+</script>

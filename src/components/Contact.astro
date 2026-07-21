@@ -1,0 +1,106 @@
+---
+interface ContactLink {
+  key: string;
+  label: string;
+}
+
+// No destination URLs yet — placeholders until the real profiles/handles
+// are provided.
+const links: ContactLink[] = [
+  { key: 'linkedin', label: 'linkedin' },
+  { key: 'instagram', label: 'instagram' },
+  { key: 'email', label: 'email' },
+];
+---
+
+<section id="contact" class="contact">
+  <div class="contact-container">
+    <p class="contact-headline">Let&rsquo;s work together!</p>
+
+    <ul class="contact-links">
+      {
+        links.map((link) => (
+          <li>
+            <a href="#" class="contact-link">
+              {link.label}
+              <svg
+                class="contact-link-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 32 32"
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  d="M21.6082 17.0135L19.0134 9.68091L11.6808 12.2757M18.475 10.809L12.8758 22.5414"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="square"
+                />
+              </svg>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--color-bg);
+    padding-block: var(--space-24);
+  }
+
+  .contact-container {
+    max-width: 87.5rem;
+    margin-inline: auto;
+    padding-inline: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-headline {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--text-3xl);
+    color: var(--color-text);
+    text-align: center;
+    margin: 0 0 var(--space-20);
+  }
+
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-16);
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: var(--text-lg);
+    color: var(--color-text);
+  }
+
+  .contact-link-icon {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 1023px) {
+    .contact-headline {
+      margin-bottom: var(--space-12);
+    }
+
+    .contact-links {
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-24);
+    }
+  }
+</style>

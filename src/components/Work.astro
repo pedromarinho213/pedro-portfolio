@@ -1,0 +1,407 @@
+---
+interface Project {
+  key: 'aura' | 'creatwave' | 'mimo';
+  slug: string;
+  name: string;
+  category: string;
+}
+
+const projects: Project[] = [
+  {
+    key: 'aura',
+    slug: 'aura-finance',
+    name: 'Aura Finance',
+    category: 'Mobile/Web App & Motion Design',
+  },
+  {
+    key: 'creatwave',
+    slug: 'creatwave',
+    name: 'Creatwave',
+    category: 'Branding & Motion Design',
+  },
+  {
+    key: 'mimo',
+    slug: 'mimo-doce',
+    name: 'Mimo Doce',
+    category: 'UI/UX Design',
+  },
+];
+---
+
+<section id="works" class="work">
+  <div class="work-container">
+    <div class="work-header">
+      <p data-label>Best Projects</p>
+      <span data-label class="work-counter">01 – 03</span>
+    </div>
+    <hr class="work-divider" />
+
+    <!-- Desktop expand-on-hover grid -->
+    <div class="work-grid">
+      {
+        projects.map((project) => (
+          <article class:list={['work-card', `work-card--${project.key}`]}>
+            <div class="work-card-face">
+              {project.key === 'aura' && <span class="work-card-name">{project.name}</span>}
+              {project.key === 'creatwave' && (
+                <svg
+                  class="work-card-logo-svg"
+                  width="64"
+                  height="61"
+                  viewBox="0 0 76 72"
+                  fill="none"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M75.936 40.3404C72.8242 60.7682 50.3292 75.4741 29.9488 70.986C9.56835 66.4979 -3.47446 45.9035 0.816829 24.9871C5.10812 4.0706 25.396 -10.9015 19.7837 10.1912C15.203 27.4073 31.3471 23.8343 41.2839 26.0226C50.7834 28.1145 50.3639 44.0301 55.2805 44.8107C64.0487 46.2029 77.0221 33.2106 75.936 40.3404Z" />
+                  <path d="M7.28882 22.3935C5.10861 20.4341 4.93339 17.7116 5.41355 12.5748C0.826692 20.4225 -2.32561 33.7957 2.36787 46.2544C7.40375 59.6219 16.2975 66.9057 26.1064 69.883C36.3218 72.9837 42.7146 72.6399 51.5148 69.1039C57.0295 66.888 55.3116 67.2424 57.7165 66.1044C52.6862 66.2507 52.0992 66.8087 51.1173 63.9202C48.0749 54.0858 47.4014 51.2657 42.6735 51.4268C34.7506 52.7693 34.0526 53.793 29.837 51.6993C27.4514 50.1053 26.0446 45.5704 25.1732 39.8514C22.9972 27.5899 14.8452 29.1846 7.28882 22.3935Z" />
+                  <path d="M55.9467 19.3242C55.5182 21.4129 53.5365 22.7462 51.5205 22.3022C49.5045 21.8582 48.2176 19.8051 48.6461 17.7165C49.0746 15.6278 51.0563 14.2945 53.0723 14.7385C55.0883 15.1825 56.3753 17.2355 55.9467 19.3242Z" />
+                  <path d="M49.5948 48.836C49.3919 49.8248 48.4537 50.456 47.4993 50.2458C46.5449 50.0357 45.9356 49.0637 46.1385 48.0748C46.3413 47.086 47.2795 46.4548 48.2339 46.665C49.1884 46.8752 49.7976 47.8472 49.5948 48.836Z" />
+                </svg>
+              )}
+              {project.key === 'mimo' && (
+                <img
+                  class="work-card-logo-img"
+                  src="/assets/images/mimo-doce-logo.png"
+                  alt="Mimo Doce"
+                  width="72"
+                  height="72"
+                  loading="lazy"
+                />
+              )}
+            </div>
+
+            <div class="work-card-reveal">
+              <div class="work-card-video">
+                <svg
+                  class="work-card-play-icon"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="2" />
+                  <path d="M19 15L34 24L19 33V15Z" fill="currentColor" />
+                </svg>
+              </div>
+              <div class="work-card-details">
+                <span class="work-card-category">{project.category}</span>
+                <a href={`/work/${project.slug}`} class="work-card-cta">
+                  View case
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- Mobile accordion -->
+    <div class="work-accordion">
+      {
+        projects.map((project) => (
+          <div class="accordion-item" data-project={project.key}>
+            <button class="accordion-toggle" aria-expanded="false" aria-controls={`panel-${project.key}`}>
+              <span class="accordion-heading">
+                <span class="accordion-name">{project.name}</span>
+                <span class="accordion-category">{project.category}</span>
+              </span>
+              <span class="accordion-icon" aria-hidden="true" />
+            </button>
+            <div class="accordion-panel" id={`panel-${project.key}`}>
+              <div class="accordion-panel-inner">
+                <div class:list={['accordion-preview', `work-card--${project.key}`]} />
+                <a href={`/work/${project.slug}`} class="accordion-cta">
+                  View case →
+                </a>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .work {
+    background: var(--color-bg);
+    padding-block: var(--space-24);
+  }
+
+  .work-container {
+    max-width: 87.5rem;
+    margin-inline: auto;
+    padding-inline: var(--space-8);
+  }
+
+  .work-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+
+  .work-divider {
+    margin-bottom: var(--space-12);
+  }
+
+  /* ---- Desktop expand-on-hover grid ---- */
+
+  .work-grid {
+    display: flex;
+    gap: var(--space-6);
+    aspect-ratio: 1014 / 640;
+  }
+
+  .work-card {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: flex var(--duration-slow) var(--ease-out-quart);
+  }
+
+  .work-card--aura {
+    background: var(--color-card-aura);
+  }
+
+  .work-card--creatwave {
+    background: var(--color-card-creatwave);
+  }
+
+  .work-card--mimo {
+    background: var(--color-card-mimo);
+  }
+
+  @media (hover: hover) {
+    .work-grid:hover .work-card {
+      flex: 0.7;
+    }
+
+    .work-grid .work-card:hover {
+      flex: 2.5;
+    }
+  }
+
+  /* Resting face — logo/name only */
+
+  .work-card-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--duration-base) var(--ease-out-quart);
+  }
+
+  .work-card-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-xl);
+    color: var(--color-text);
+  }
+
+  .work-card-logo-svg {
+    fill: var(--color-nav-text);
+  }
+
+  .work-card-logo-img {
+    width: 4.5rem;
+    height: 4.5rem;
+    object-fit: contain;
+  }
+
+  /* Hover reveal — video placeholder + category + CTA */
+
+  .work-card-reveal {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity var(--duration-base) var(--ease-out-quart),
+      transform var(--duration-base) var(--ease-out-quart);
+  }
+
+  .work-card-video {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-overlay);
+  }
+
+  .work-card-play-icon {
+    color: var(--color-nav-text);
+  }
+
+  .work-card-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background: var(--color-overlay);
+  }
+
+  .work-card-category {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    color: var(--color-nav-text-muted);
+  }
+
+  .work-card-cta {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-nav-text);
+    background: var(--color-nav-bg);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-5);
+    white-space: nowrap;
+  }
+
+  @media (hover: hover) {
+    .work-card:hover .work-card-face {
+      opacity: 0;
+    }
+
+    .work-card:hover .work-card-reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ---- Mobile accordion ---- */
+
+  .work-accordion {
+    display: none;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .accordion-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-block: var(--space-5);
+    text-align: left;
+  }
+
+  .accordion-heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .accordion-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--color-text);
+  }
+
+  .accordion-category {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  .accordion-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-text);
+  }
+
+  .accordion-icon::before,
+  .accordion-icon::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    transition: transform var(--duration-base) var(--ease-hover);
+  }
+
+  .accordion-icon::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+
+  .accordion-icon::after {
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  .accordion-item.is-open .accordion-icon::after {
+    transform: translateX(-50%) scaleY(0);
+  }
+
+  .accordion-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--duration-base) var(--ease-out-quart);
+  }
+
+  .accordion-item.is-open .accordion-panel {
+    grid-template-rows: 1fr;
+  }
+
+  .accordion-panel-inner {
+    overflow: hidden;
+  }
+
+  .accordion-preview {
+    border-radius: var(--radius-lg);
+    aspect-ratio: 16 / 10;
+    margin-bottom: var(--space-4);
+  }
+
+  .accordion-cta {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-5);
+  }
+
+  @media (max-width: 1023px) {
+    .work-grid {
+      display: none;
+    }
+
+    .work-accordion {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const items = document.querySelectorAll<HTMLElement>('.accordion-item');
+
+  items.forEach((item) => {
+    const toggle = item.querySelector<HTMLButtonElement>('.accordion-toggle');
+
+    toggle?.addEventListener('click', () => {
+      const isOpen = item.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  });
+</script>

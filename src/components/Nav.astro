@@ -1,0 +1,163 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home', icon: '⌂' },
+  { href: '/#works', label: 'Works', icon: '▦' },
+  { href: '/#contact', label: 'Contact', icon: '✉' },
+];
+---
+
+<a href="/" class="logo" aria-label="Pedro Moura — início">
+  <svg
+    class="logo-icon"
+    width="16"
+    height="16"
+    viewBox="0 0 21 21"
+    fill="currentColor"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path
+      d="M2.17498 3.11675C4.58698 -0.342836 7.99451 -1.57049 6.25009 2.83695C4.44921 7.38667 8.98718 6.9269 11.6415 7.83997C14.1789 8.71287 13.5604 13.0394 14.883 13.4093C17.2421 14.068 21.2096 10.9384 20.6868 12.8475C19.6418 16.6598 16.1056 19.4125 12.2164 20.1004C10.7887 20.4066 9.47534 20.389 8.01426 20.0008C7.71044 19.9288 7.40805 19.8448 7.1103 19.7424C6.66916 19.5906 6.24659 19.4075 5.83976 19.2036C3.3423 18.0441 1.23109 15.8028 0.296969 12.1174C-0.600909 8.57478 0.684244 5.03501 2.1901 3.04576C2.18505 3.06963 2.17988 3.09326 2.17498 3.11675Z"
+    />
+  </svg>
+  <span>Pedro</span>
+</a>
+
+<nav class="nav-pill" aria-label="Navegação principal">
+  <ul>
+    {
+      navLinks.map((link) => (
+        <li>
+          <a href={link.href} class:list={['nav-link', { active: link.label === 'Home' }]}>
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<nav class="nav-tabbar" aria-label="Navegação móvel">
+  <ul>
+    {
+      navLinks.map((link) => (
+        <li>
+          <a href={link.href} class:list={['tab-link', { active: link.label === 'Home' }]}>
+            <span class="tab-icon" aria-hidden="true">
+              {link.icon}
+            </span>
+            <span class="tab-label">{link.label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .logo {
+    position: fixed;
+    top: var(--space-4);
+    left: var(--space-6);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--text-base);
+  }
+
+  .logo:hover {
+    opacity: 1;
+  }
+
+  .logo-icon {
+    flex-shrink: 0;
+    transform: rotate(6.62deg);
+  }
+
+  .nav-pill {
+    position: fixed;
+    top: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: var(--color-nav-bg);
+    border-radius: var(--radius-full);
+    padding: var(--space-3) var(--space-6);
+  }
+
+  .nav-pill ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .nav-link {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-sm);
+    color: var(--color-nav-text-muted);
+    transition: color var(--duration-fast) var(--ease-hover);
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-nav-text);
+    opacity: 1;
+  }
+
+  .nav-tabbar {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
+    .nav-pill {
+      display: none;
+    }
+
+    .nav-tabbar {
+      display: block;
+      position: fixed;
+      bottom: var(--space-4);
+      left: var(--space-4);
+      right: var(--space-4);
+      z-index: 100;
+      background: var(--color-nav-bg);
+      border-radius: var(--radius-full);
+      padding: var(--space-2) var(--space-4);
+    }
+
+    .nav-tabbar ul {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .tab-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+      color: var(--color-nav-text-muted);
+      transition: color var(--duration-fast) var(--ease-hover);
+    }
+
+    .tab-link:hover,
+    .tab-link.active {
+      color: var(--color-nav-text);
+      opacity: 1;
+    }
+
+    .tab-icon {
+      font-size: var(--text-lg);
+      line-height: 1;
+    }
+
+    .tab-label {
+      font-size: var(--text-xs);
+    }
+  }
+</style>
