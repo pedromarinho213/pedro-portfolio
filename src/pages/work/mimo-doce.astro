@@ -1,0 +1,667 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+/**
+ * MCP mapping notes (Figma frame "Mimo Doce Layout case", node 106:42;
+ * no dedicated mobile frame exists for this project — same situation as
+ * Aura Finance, see BRIEF.md).
+ *
+ * Real section order (top→bottom, confirmed by Y position, not assumed
+ * from Creatwave or Aura Finance): Hero → "The Solution" (visual-section,
+ * centered) → "The Problem" (Challenge-section, image-left) → "Visual
+ * Identity & Structure" (media 03-section, centered, HAS a heading) →
+ * "Designed Around Real Habits" (design system-section, image-right) →
+ * Next Case. Note the Solution/Problem order is reversed compared to
+ * Creatwave/Aura (Solution renders first here) — that's the real Figma
+ * layout (confirmed by Y position: visual-section y=1250 sits above
+ * Challenge-section y=2089), not a copy-paste mistake.
+ *
+ * Like Aura Finance (a product/UX case study) and unlike Creatwave (a
+ * branding case study), this project has NO color-palette section — the
+ * "design system-section" node here (confirmed via MCP) contains only a
+ * heading/body/media triplet, no color-swatch layers. The only color
+ * references (#FE4977 primary pink, #420C2B dark brown) appear as prose
+ * inside the "Visual Identity & Structure" body copy, not as a rendered
+ * swatch list, so they stay as plain text rather than a palette.colors[]
+ * structure. That's why this file reuses Aura's generic `sections[]` array
+ * keyed by layout variant instead of Creatwave's fixed named fields.
+ *
+ * Text-color normalization (same "unfinished layer" pattern as the other
+ * two pages): section headings used raw `text-black` and meta/next-case
+ * values used raw `#1c1915` in Figma — both normalized to `var(--color-text)`.
+ * The meta "Tag label" color `#8c8479` already equals `var(--color-text-muted)`.
+ *
+ * Minor copy cleanup: the Figma "Role" tag value had a stray leading space
+ * and "Tools" had a doubled space before "· Illustrator" — both trimmed,
+ * wording otherwise untouched. The "Visual Identity & Structure" body was
+ * two paragraphs separated by a blank line in Figma; flattened into one
+ * paragraph to match the single-`<p>` `.case-body` structure used by every
+ * other section on this page and the other two case studies (no section
+ * anywhere in the template renders a two-paragraph body).
+ *
+ * No "Coming Soon"-style badge exists anywhere in this project's content,
+ * so the optional `badge` field is never set below (see BRIEF.md / this
+ * file's `ContentSection` interface, copied from aura-finance.astro).
+ *
+ * Next Case target cross-checked against creatwave.astro, which already
+ * points to '/work/mimo-doce' — confirms the site's next-case loop is
+ * Aura Finance → Creatwave → Mimo Doce → Aura Finance. Display text
+ * ("Aura Finance - Your path to Web3") copied verbatim from the Figma
+ * "Project name" layer (node 106:93).
+ *
+ * Media aspect ratios measured from the real Figma frame dimensions:
+ * hero placeholder 1224×500 (bottom edge y=705, node 106:46 — same figure
+ * as Creatwave/Aura, so this page reuses the same 44rem desktop / 32rem
+ * mobile trail height + fade-start already established); "The Solution"
+ * media 1016×400; "The Problem" media 496×585; "Visual Identity &
+ * Structure" media 1224×376; "Designed Around Real Habits" media 542×731.
+ * Mobile ratios (no Figma mobile frame to measure) follow the same
+ * principle already used in aura-finance.astro: sections already portrait
+ * on desktop keep their exact ratio on mobile (496/585 and 542/731 here);
+ * centered wide-banner sections get a portrait mobile companion ratio —
+ * and since 1016/400 and 1224/376 are the exact same desktop dimensions
+ * Aura Finance already solved for, this file reuses those same mobile
+ * pairings (356/400 and 358/447) for visual consistency across the site.
+ */
+
+interface MetaItem {
+  label: string;
+  value: string;
+}
+
+interface MediaAsset {
+  src: string | null;
+  alt: string;
+}
+
+interface ContentSection {
+  id: string;
+  layout: 'image-left' | 'image-right' | 'centered';
+  heading: string;
+  body: string;
+  media: MediaAsset;
+  aspectDesktop: string;
+  aspectMobile: string;
+  badge?: string;
+}
+
+interface CaseStudyData {
+  slug: string;
+  title: string;
+  subtitle: string;
+  heroMedia: MediaAsset;
+  meta: MetaItem[];
+  sections: ContentSection[];
+  nextCase: { label: string; projectName: string; href: string };
+}
+
+const project: CaseStudyData = {
+  slug: 'mimo-doce',
+  title: 'Mimo Doce: Digitizing an Artisanal Confectionery',
+  subtitle:
+    'A delivery app that replaces slow, message-based ordering with a fast, self-serve experience — built around a custom "Build Your Kit" tool for party orders.',
+  heroMedia: { src: null, alt: 'Mimo Doce hero video placeholder' },
+  meta: [
+    { label: 'Role', value: 'UI/UX & Visual Identity Designer' },
+    { label: 'Tools', value: 'Figma · After Effects · Illustrator' },
+    { label: 'Timeline', value: 'Set — Nov 2024 · 3 months' },
+    { label: 'Context', value: 'Delivery app for a confectionery business moving off manual, message-based ordering.' },
+  ],
+  sections: [
+    {
+      id: 'the-solution',
+      layout: 'centered',
+      heading: 'The Solution',
+      body: 'Mimo Doce replaces the message thread with an interactive catalog and a dedicated "Build Your Kit" tool, so users configure custom orders without waiting on a human response. Navigation follows patterns already familiar from major delivery apps — no learning curve, for any age group.',
+      media: { src: null, alt: 'Mimo Doce catalog and "Build Your Kit" tool placeholder' },
+      aspectDesktop: '1016 / 400',
+      aspectMobile: '356 / 400',
+    },
+    {
+      id: 'the-problem',
+      layout: 'image-left',
+      heading: 'The Problem',
+      body: 'Orders came in through WhatsApp — slow, error-prone, and dependent on someone being available to reply in real time. Complex requests, like custom party kits, were the hardest to get right.',
+      media: { src: null, alt: 'Mimo Doce user research placeholder' },
+      aspectDesktop: '496 / 585',
+      aspectMobile: '496 / 585',
+    },
+    {
+      id: 'visual-identity-and-structure',
+      layout: 'centered',
+      heading: 'Visual Identity & Structure',
+      body: 'The brand needed to expand digitally without losing its handmade warmth — welcoming and humanized, but modern enough to scale. Primary Pink (#FE4977) drives every CTA; Dark Brown (#420C2B) holds text and contrast against soft pink backgrounds, with rounded, 2px-stroke icons throughout. Information architecture and a 4-column grid were locked in at mid-fidelity — cart flow, checkout, and navigation — before any brand styling landed on top.',
+      media: { src: null, alt: 'Mimo Doce visual identity and grid system placeholder' },
+      aspectDesktop: '1224 / 376',
+      aspectMobile: '358 / 447',
+    },
+    {
+      id: 'designed-around-real-habits',
+      layout: 'image-right',
+      heading: 'Designed Around Real Habits',
+      body: 'Three recurring needs shaped the flow: one-tap reordering for regulars, real-time delivery tracking to remove order anxiety, and a guided kit builder for first-time party planners.',
+      media: { src: null, alt: 'Mimo Doce reorder, tracking, and kit builder flows placeholder' },
+      aspectDesktop: '542 / 731',
+      aspectMobile: '542 / 731',
+    },
+  ],
+  nextCase: {
+    label: 'Next Case →',
+    projectName: 'Aura Finance - Your path to Web3',
+    href: '/work/aura-finance',
+  },
+};
+---
+
+<BaseLayout title={`${project.title} — Pedro Moura`}>
+  <main class="case">
+    <section class="case-hero">
+      <div class="case-trail trail-fade" aria-hidden="true">
+        <svg
+          class="case-trail-svg"
+          viewBox="-60 -160 1770 1380"
+          preserveAspectRatio="xMidYMid slice"
+          focusable="false"
+        >
+          <defs>
+            <linearGradient id="mimoTrailGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color: var(--color-trail-1)" />
+              <stop offset="32%" style="stop-color: var(--color-trail-2)" />
+              <stop offset="68%" style="stop-color: var(--color-trail-3)" />
+              <stop offset="97%" style="stop-color: var(--color-trail-4)" />
+            </linearGradient>
+
+            <filter id="mimoTrailGrain" x="-20%" y="-20%" width="140%" height="140%">
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.9"
+                numOctaves="5"
+                seed="7"
+                stitchTiles="stitch"
+                result="noise"
+              />
+              <feColorMatrix
+                in="noise"
+                type="matrix"
+                values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0"
+                result="grainAlpha"
+              />
+              <feComposite in="grainAlpha" in2="SourceGraphic" operator="in" result="grainOnShape" />
+              <feBlend in="SourceGraphic" in2="grainOnShape" mode="overlay" />
+            </filter>
+          </defs>
+
+          <path
+            d="M1609.44 395.849C1609.44 355.849 1598.94 267.849 1563.44 232.349C1527.94 196.849 1430.94 171.349 1284.44 171.349C1137.94 171.349 1116.44 258.04 1150.94 308.04C1206.13 388.034 1417.94 411.04 1417.94 490.04C1417.94 548.54 1084.94 557.37 982.935 530.039C880.935 502.709 767.435 374.54 733.936 286.349C706.496 214.111 426.935 -102.46 310.435 133.54C212.61 331.709 7.24641 223.313 54.4353 442.04C91.4352 613.54 469.435 412.04 535.935 426.04C737.399 468.453 740.935 742.54 625.935 757.54C544.249 768.195 273.142 659.597 259.435 772.54C234.435 978.54 492.935 919.04 595.935 919.04C677.935 919.04 737.956 1090.78 820.936 1009.85C901.936 930.85 813.935 827.833 1079.94 731.73C1312.44 647.73 1059.82 927.214 1066.94 969.04C1079.44 1042.54 1350.23 894.115 1381.44 881.54C1551.44 813.04 1546.79 941.35 1535.44 1009.85C1519.44 1106.35 1357.44 1113.92 1381.44 1120.35"
+            fill="none"
+            stroke="url(#mimoTrailGradient)"
+            stroke-width="108"
+            stroke-linecap="round"
+            filter="url(#mimoTrailGrain)"
+          />
+        </svg>
+      </div>
+
+      <div class="case-container case-hero-stack">
+        <div class="case-media case-media--hero">
+          {
+            project.heroMedia.src ? (
+              <img src={project.heroMedia.src} alt={project.heroMedia.alt} />
+            ) : (
+              <div class="media-placeholder" role="img" aria-label={project.heroMedia.alt} />
+            )
+          }
+        </div>
+
+        <div class="case-hero-head">
+          <h1 class="case-title">{project.title}</h1>
+          <p class="case-subtitle">{project.subtitle}</p>
+        </div>
+
+        <ul class="case-meta">
+          {
+            project.meta.map((item) => (
+              <li class="case-meta-item">
+                <span class="case-meta-label">{item.label}</span>
+                <span class="case-meta-value">{item.value}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    {
+      project.sections.map((section) => {
+        const mediaStyle = `--aspect-desktop: ${section.aspectDesktop}; --aspect-mobile: ${section.aspectMobile};`;
+        const mediaEl = (
+          <div class="case-media" style={mediaStyle}>
+            {section.media.src ? (
+              <img src={section.media.src} alt={section.media.alt} />
+            ) : (
+              <div class="media-placeholder" role="img" aria-label={section.media.alt} />
+            )}
+          </div>
+        );
+        const headingEl = (
+          <div class="case-heading-row">
+            <h2 class:list={['case-heading', { 'case-heading--centered': section.layout === 'centered' }]}>
+              {section.heading}
+            </h2>
+            {section.badge && (
+              <span class="coming-soon-badge" aria-hidden="true">
+                {section.badge}
+              </span>
+            )}
+          </div>
+        );
+
+        return section.layout === 'centered' ? (
+          <section class="case-section" id={section.id}>
+            <div class="case-container case-centered">
+              {headingEl}
+              {mediaEl}
+              <p class="case-body case-body--centered">{section.body}</p>
+            </div>
+          </section>
+        ) : (
+          <section class="case-section" id={section.id}>
+            <div class="case-container case-row">
+              {section.layout === 'image-left' && mediaEl}
+              <div class="case-copy">
+                {headingEl}
+                <p class="case-body">{section.body}</p>
+              </div>
+              {section.layout === 'image-right' && mediaEl}
+            </div>
+          </section>
+        );
+      })
+    }
+
+    <section class="next-case">
+      <div class="case-container next-case-row">
+        <div class="next-case-info">
+          <p class="next-case-label">{project.nextCase.label}</p>
+          <p class="next-case-name">{project.nextCase.projectName}</p>
+        </div>
+        <a href={project.nextCase.href} class="next-case-cta">
+          View next case
+          <svg
+            class="next-case-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M3.33331 8H12.6666"
+              stroke="currentColor"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M8 3.3335L12.6667 8.00016L8 12.6668"
+              stroke="currentColor"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .case {
+    background: var(--color-bg);
+  }
+
+  .case-container {
+    max-width: 76.5rem;
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  .case-section {
+    padding-block: var(--space-24);
+  }
+
+  /* ---- Hero ---- */
+
+  .case-hero {
+    position: relative;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
+
+  /* Same trail technique as Creatwave/Aura Finance. Height is hard-clipped
+     to this project's own "Hero video-placeholder" bottom edge — 705px
+     (MCP-confirmed, node 106:46 y=205+height=500) — same figure as the
+     other two case studies, since all three share the identical hero
+     placeholder position/size and title position (y=769). Mobile has no
+     Figma frame to measure, so it reuses the same 32rem figure already
+     established, for the same reason (identical hero geometry). */
+  .case-trail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 44rem;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    --trail-fade-start: 55%;
+  }
+
+  .case-trail-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .case-hero-stack {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .case-hero-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .case-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-3xl);
+    color: var(--color-text);
+    max-width: 40ch;
+    margin: 0;
+  }
+
+  .case-subtitle {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: var(--text-base);
+    color: var(--color-text);
+    max-width: 32ch;
+    margin: 0;
+  }
+
+  .case-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+
+  .case-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1;
+  }
+
+  .case-meta-label {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .case-meta-value {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+  }
+
+  /* ---- Shared section layout ---- */
+
+  .case-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-12);
+  }
+
+  .case-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-10);
+  }
+
+  .case-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .case-heading-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .case-heading {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .case-heading--centered {
+    text-align: center;
+  }
+
+  .case-body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: var(--text-base);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .case-body--centered {
+    text-align: center;
+    max-width: 60ch;
+  }
+
+  /* ---- Media placeholders ---- */
+  /* Each section's own aspect ratio comes from --aspect-desktop /
+     --aspect-mobile custom properties set inline per section (data-driven
+     — see the `mediaStyle` string above), since section media proportions
+     genuinely differ project to project and section to section. */
+
+  .case-media {
+    position: relative;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: var(--aspect-desktop);
+  }
+
+  .case-media img,
+  .media-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .case-media img {
+    object-fit: cover;
+  }
+
+  .media-placeholder {
+    background: var(--color-media-placeholder);
+  }
+
+  .case-media--hero {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* ---- "Coming Soon!" badge ----
+     Kept for structural parity with the shared template (see
+     aura-finance.astro) even though this project's content never sets a
+     `badge` on any section — no equivalent "in progress" marker exists
+     anywhere in the Mimo Doce Figma frame, so this block simply never
+     renders here. */
+  .coming-soon-badge {
+    flex-shrink: 0;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--text-xs);
+    color: var(--color-nav-text);
+    background: var(--color-nav-bg);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+    animation: coming-soon-pulse var(--duration-crawl) var(--ease-hover) infinite;
+  }
+
+  @keyframes coming-soon-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.04);
+    }
+  }
+
+  /* ---- Next case ---- */
+
+  .next-case {
+    padding-block: var(--space-16) var(--space-24);
+  }
+
+  .next-case-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding-top: var(--space-12);
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .next-case-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .next-case-label {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .next-case-name {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: var(--text-xl);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .next-case-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    color: var(--color-nav-text);
+    background: var(--color-nav-bg);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-5);
+    white-space: nowrap;
+  }
+
+  .next-case-icon {
+    color: var(--color-nav-text);
+  }
+
+  /* ---- Mobile (<1024px) ---- */
+  /* No Figma mobile frame exists for this project (same situation as Aura
+     Finance) — reusing that page's already-corrected mobile approach
+     (left-aligned text, no forced centering) instead of Creatwave's
+     original centered mobile layout. Per-section aspect-ratio swap is
+     handled by --aspect-mobile already set inline; this block only covers
+     the structural/layout changes. */
+
+  @media (max-width: 1023px) {
+    .case-trail {
+      height: 32rem;
+      --trail-fade-start: 45%;
+    }
+
+    /* Push the hero text block down past the trail's fade zone — see
+       aura-finance.astro for the full rationale. This adds to (not
+       replaces) .case-hero-stack's existing flex gap. */
+    .case-hero-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+      margin-top: var(--space-48);
+    }
+
+    .case-meta {
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    /* This project has no mobile Figma frame to justify centered text
+       (same reasoning as Aura Finance) — left-align everything here
+       instead, both the block position (align-items) and the text itself
+       (text-align). Scoped to this file only. */
+    .case-centered {
+      align-items: flex-start;
+    }
+
+    .case-heading--centered,
+    .case-body--centered {
+      text-align: left;
+    }
+
+    .case-row {
+      grid-template-columns: 1fr;
+    }
+
+    .case-media {
+      aspect-ratio: var(--aspect-mobile);
+    }
+
+    /* .case-media--hero has no --aspect-mobile custom property (its ratio
+       is a fixed 16/9, not data-driven per section) — without this, the
+       rule above still wins on source order (equal specificity) and
+       resolves to an invalid var(), collapsing the hero media to 0
+       height. Re-assert the fixed ratio after it. */
+    .case-media--hero {
+      aspect-ratio: 16 / 9;
+    }
+
+    .next-case-row {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>
